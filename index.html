@@ -907,7 +907,7 @@ JSONのみを返してください（マークダウンや説明文は不要）�
   let response;
   try {
     response = await fetch(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(settings.apiKey)}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(settings.apiKey)}`,
       {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
