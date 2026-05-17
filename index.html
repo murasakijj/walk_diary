@@ -616,6 +616,9 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// ============ アクセス制限 ============
+const ALLOWED_EMAIL = 'u9c3300232346g@gmail.com';
+
 // ============ App State ============
 let currentUser = null;
 let entries = [];
@@ -649,6 +652,12 @@ function showApp() {
 // ============ Auth State ============
 onAuthStateChanged(auth, async (user) => {
   if (user) {
+    if (user.email !== ALLOWED_EMAIL) {
+      await signOut(auth);
+      showAuth();
+      setAuthError('このアプリは非公開です。');
+      return;
+    }
     currentUser = user;
     loadSettings();
     showApp();
