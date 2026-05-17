@@ -26,10 +26,7 @@
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
-
-  html, body {
-    overscroll-behavior: none;
-  }
+  html, body { overscroll-behavior: none; }
 
   body {
     font-family: 'Shippori Mincho', 'Hiragino Mincho ProN', serif;
@@ -44,7 +41,142 @@
     line-height: 1.6;
   }
 
-  /* ========== Header ========== */
+  /* ===== Loading Screen ===== */
+  .loading-screen {
+    position: fixed;
+    inset: 0;
+    background: var(--paper);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    flex-direction: column;
+    gap: 16px;
+    font-family: 'Klee One', cursive;
+    color: var(--moss);
+    font-size: 13px;
+    letter-spacing: 0.2em;
+  }
+  .loading-ornament { font-size: 32px; animation: pulse 2s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 0.2; } 50% { opacity: 0.9; } }
+
+  /* ===== Auth Screen ===== */
+  .auth-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+  }
+  .auth-box {
+    width: 100%;
+    max-width: 400px;
+    background: #fefcf6;
+    border: 1px solid var(--paper-shadow);
+    box-shadow: 0 4px 28px rgba(42,37,32,0.12);
+    padding: 32px 28px 28px;
+  }
+  .auth-header { text-align: center; margin-bottom: 24px; }
+  .auth-mode-title {
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--ink);
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .btn-google {
+    width: 100%;
+    padding: 12px;
+    background: #fff;
+    border: 1px solid var(--paper-shadow);
+    border-radius: 2px;
+    font-family: 'Shippori Mincho', serif;
+    font-size: 14px;
+    color: var(--ink);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 16px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    transition: box-shadow 0.2s;
+    letter-spacing: 0.1em;
+  }
+  .btn-google:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.14); }
+  .auth-divider {
+    text-align: center;
+    position: relative;
+    margin: 16px 0;
+    color: var(--moss-light);
+    font-family: 'Klee One', cursive;
+    font-size: 12px;
+  }
+  .auth-divider::before, .auth-divider::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: 42%;
+    height: 1px;
+    background: var(--paper-shadow);
+  }
+  .auth-divider::before { left: 0; }
+  .auth-divider::after { right: 0; }
+  .auth-error {
+    background: rgba(160,74,58,0.1);
+    border-left: 2px solid var(--berry);
+    padding: 8px 12px;
+    font-family: 'Klee One', cursive;
+    font-size: 12px;
+    color: var(--berry);
+    margin-bottom: 8px;
+    line-height: 1.5;
+  }
+  .btn-auth-toggle {
+    width: 100%;
+    padding: 10px;
+    background: transparent;
+    border: none;
+    color: var(--moss);
+    font-family: 'Klee One', cursive;
+    font-size: 12px;
+    cursor: pointer;
+    letter-spacing: 0.05em;
+    margin-top: 4px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  /* ===== User Badge ===== */
+  .user-badge-wrap {
+    position: absolute;
+    top: 28px;
+    left: 16px;
+    font-family: 'Klee One', cursive;
+    font-size: 11px;
+    color: var(--moss-light);
+    max-width: 90px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* ===== Migration Notice ===== */
+  .migration-notice {
+    background: rgba(74,93,58,0.07);
+    border: 1px solid var(--moss-light);
+    padding: 14px 16px;
+    margin: 12px 16px;
+    font-family: 'Klee One', cursive;
+    font-size: 12px;
+    color: var(--ink);
+    line-height: 1.7;
+  }
+  .migration-notice strong { color: var(--moss); }
+  .migration-actions { display: flex; gap: 8px; margin-top: 10px; }
+
+  /* ===== Header ===== */
   header {
     padding: 28px 20px 16px;
     text-align: center;
@@ -70,28 +202,11 @@
     text-transform: uppercase;
     margin-bottom: 4px;
   }
-  .title-jp {
-    font-size: 26px;
-    font-weight: 600;
-    letter-spacing: 0.15em;
-    color: var(--ink);
-  }
-  .subtitle {
-    font-family: 'Klee One', cursive;
-    font-size: 12px;
-    color: var(--moss-light);
-    margin-top: 6px;
-    letter-spacing: 0.1em;
-  }
+  .title-jp { font-size: 26px; font-weight: 600; letter-spacing: 0.15em; color: var(--ink); }
+  .subtitle { font-family: 'Klee One', cursive; font-size: 12px; color: var(--moss-light); margin-top: 6px; letter-spacing: 0.1em; }
 
-  /* ========== Tabs ========== */
-  .tabs {
-    display: flex;
-    justify-content: center;
-    gap: 4px;
-    padding: 16px 12px;
-    flex-wrap: wrap;
-  }
+  /* ===== Tabs ===== */
+  .tabs { display: flex; justify-content: center; gap: 4px; padding: 16px 12px; flex-wrap: wrap; }
   .tab {
     background: transparent;
     border: 1px solid transparent;
@@ -104,11 +219,7 @@
     transition: all 0.3s ease;
     border-radius: 2px;
   }
-  .tab.active {
-    color: var(--ink);
-    border-color: var(--moss);
-    background: rgba(255,255,255,0.4);
-  }
+  .tab.active { color: var(--ink); border-color: var(--moss); background: rgba(255,255,255,0.4); }
   .tab-en {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
@@ -120,35 +231,20 @@
     margin-top: 2px;
   }
 
-  /* ========== Views ========== */
+  /* ===== Views ===== */
   .view { display: none; padding: 12px 16px 40px; animation: fade 0.4s ease; }
   .view.active { display: block; }
   @keyframes fade { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
 
-  /* ========== Empty State ========== */
-  .empty {
-    text-align: center;
-    padding: 60px 20px;
-    color: var(--moss-light);
-  }
-  .empty-icon {
-    font-size: 48px;
-    margin-bottom: 16px;
-    opacity: 0.4;
-  }
-  .empty-text {
-    font-family: 'Klee One', cursive;
-    font-size: 14px;
-  }
+  /* ===== Empty State ===== */
+  .empty { text-align: center; padding: 60px 20px; color: var(--moss-light); }
+  .empty-icon { font-size: 48px; margin-bottom: 16px; opacity: 0.4; }
+  .empty-text { font-family: 'Klee One', cursive; font-size: 14px; }
 
-  /* ========== Gallery ========== */
-  .gallery {
-    columns: 2;
-    column-gap: 8px;
-  }
+  /* ===== Gallery ===== */
+  .gallery { columns: 2; column-gap: 8px; }
   @media (min-width: 600px) { .gallery { columns: 3; } }
   @media (min-width: 900px) { .gallery { columns: 4; } }
-
   .card {
     break-inside: avoid;
     margin-bottom: 12px;
@@ -161,486 +257,200 @@
     padding-bottom: 12px;
   }
   .card:active { transform: scale(0.98); }
-  .card img {
-    width: 100%;
-    height: auto;
-    display: block;
-  }
+  .card img { width: 100%; height: auto; display: block; }
   .card-info { padding: 10px 12px 0; }
-  .card-name {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--ink);
-    line-height: 1.4;
-  }
-  .card-name-sci {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 11px;
-    color: var(--moss);
-    margin-top: 2px;
-  }
-  .card-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 6px;
-    font-size: 10px;
-    color: var(--moss-light);
-    font-family: 'Klee One', cursive;
-  }
-  .card-cat {
-    display: inline-block;
-    padding: 2px 6px;
-    background: var(--paper-deep);
-    border-radius: 2px;
-    font-size: 9px;
-    letter-spacing: 0.1em;
-    color: var(--moss);
-  }
+  .card-name { font-size: 14px; font-weight: 600; color: var(--ink); line-height: 1.4; }
+  .card-name-sci { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 11px; color: var(--moss); margin-top: 2px; }
+  .card-meta { display: flex; justify-content: space-between; align-items: center; margin-top: 6px; font-size: 10px; color: var(--moss-light); font-family: 'Klee One', cursive; }
+  .card-cat { display: inline-block; padding: 2px 6px; background: var(--paper-deep); border-radius: 2px; font-size: 9px; letter-spacing: 0.1em; color: var(--moss); }
 
-  /* ========== Map ========== */
-  #map {
-    height: calc(100vh - 240px);
-    min-height: 400px;
-    border: 1px solid var(--paper-shadow);
-    box-shadow: 0 2px 8px rgba(42,37,32,0.06);
-    background: var(--paper-deep);
-  }
-  .map-popup {
-    font-family: 'Shippori Mincho', serif;
-    text-align: center;
-  }
-  .map-popup img {
-    width: 140px;
-    height: 100px;
-    object-fit: cover;
-    margin-bottom: 6px;
-  }
+  /* ===== Map ===== */
+  #map { height: calc(100vh - 240px); min-height: 400px; border: 1px solid var(--paper-shadow); box-shadow: 0 2px 8px rgba(42,37,32,0.06); background: var(--paper-deep); }
+  .map-popup { font-family: 'Shippori Mincho', serif; text-align: center; }
+  .map-popup img { width: 140px; height: 100px; object-fit: cover; margin-bottom: 6px; }
   .map-popup-name { font-weight: 600; font-size: 13px; }
   .map-popup-date { font-size: 11px; color: var(--moss); margin-top: 2px; font-family: 'Klee One', cursive; }
 
-  /* ========== Timeline ========== */
-  .timeline {
-    position: relative;
-    padding-left: 24px;
-  }
+  /* ===== Timeline ===== */
+  .timeline { position: relative; padding-left: 24px; }
   .timeline::before {
     content: '';
     position: absolute;
-    left: 6px;
-    top: 12px;
-    bottom: 12px;
+    left: 6px; top: 12px; bottom: 12px;
     width: 1px;
     background: linear-gradient(to bottom, transparent, var(--moss-light) 20%, var(--moss-light) 80%, transparent);
   }
-  .timeline-day {
-    margin-bottom: 28px;
-    position: relative;
-  }
+  .timeline-day { margin-bottom: 28px; position: relative; }
   .timeline-day::before {
     content: '';
     position: absolute;
-    left: -22px;
-    top: 6px;
-    width: 9px;
-    height: 9px;
+    left: -22px; top: 6px;
+    width: 9px; height: 9px;
     border-radius: 50%;
     background: var(--paper);
     border: 1.5px solid var(--moss);
   }
-  .timeline-date {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 13px;
-    color: var(--moss);
-    letter-spacing: 0.15em;
-    margin-bottom: 4px;
-    text-transform: uppercase;
-  }
-  .timeline-date-jp {
-    font-family: 'Klee One', cursive;
-    font-size: 11px;
-    color: var(--moss-light);
-    margin-bottom: 12px;
-  }
-  .timeline-items {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-    gap: 8px;
-  }
-  .timeline-item {
-    background: #fefcf6;
-    border: 1px solid var(--paper-shadow);
-    cursor: pointer;
-    transition: transform 0.3s ease;
-    overflow: hidden;
-  }
+  .timeline-date { font-family: 'Cormorant Garamond', serif; font-size: 13px; color: var(--moss); letter-spacing: 0.15em; margin-bottom: 4px; text-transform: uppercase; }
+  .timeline-date-jp { font-family: 'Klee One', cursive; font-size: 11px; color: var(--moss-light); margin-bottom: 12px; }
+  .timeline-items { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: 8px; }
+  .timeline-item { background: #fefcf6; border: 1px solid var(--paper-shadow); cursor: pointer; transition: transform 0.3s ease; overflow: hidden; }
   .timeline-item:active { transform: scale(0.96); }
-  .timeline-item img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    display: block;
-  }
-  .timeline-item-name {
-    padding: 6px 8px;
-    font-size: 11px;
-    font-weight: 600;
-    line-height: 1.3;
-  }
+  .timeline-item img { width: 100%; aspect-ratio: 1; object-fit: cover; display: block; }
+  .timeline-item-name { padding: 6px 8px; font-size: 11px; font-weight: 600; line-height: 1.3; }
 
-  /* ========== Detail Modal ========== */
-  .modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background: rgba(42,37,32,0.7);
-    z-index: 1000;
-    overflow-y: auto;
-    backdrop-filter: blur(4px);
-  }
+  /* ===== Detail Modal ===== */
+  .modal { display: none; position: fixed; inset: 0; background: rgba(42,37,32,0.7); z-index: 1000; overflow-y: auto; backdrop-filter: blur(4px); }
   .modal.show { display: block; animation: fade 0.3s ease; }
-  .modal-content {
-    background: var(--paper);
-    margin: 20px auto;
-    max-width: 500px;
-    border: 1px solid var(--paper-shadow);
-    box-shadow: 0 8px 40px rgba(42,37,32,0.4);
-    position: relative;
-  }
+  .modal-content { background: var(--paper); margin: 20px auto; max-width: 500px; border: 1px solid var(--paper-shadow); box-shadow: 0 8px 40px rgba(42,37,32,0.4); position: relative; }
   .modal-close {
-    position: absolute;
-    top: 8px;
-    right: 8px;
+    position: absolute; top: 8px; right: 8px;
     background: rgba(245,239,228,0.95);
     border: 1px solid var(--paper-shadow);
-    width: 32px;
-    height: 32px;
+    width: 32px; height: 32px;
     border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 10;
+    font-size: 20px; cursor: pointer; z-index: 10;
     color: var(--ink);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    line-height: 1;
+    display: flex; align-items: center; justify-content: center; line-height: 1;
   }
-  .modal-img {
-    width: 100%;
-    max-height: 60vh;
-    object-fit: contain;
-    background: #1a1815;
-    display: block;
-  }
+  .modal-img { width: 100%; max-height: 60vh; object-fit: contain; background: #1a1815; display: block; }
   .modal-body { padding: 20px 24px 28px; }
-  .modal-name {
-    font-size: 22px;
-    font-weight: 600;
-    margin-bottom: 4px;
-  }
-  .modal-name-sci {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 13px;
-    color: var(--moss);
-    margin-bottom: 14px;
-  }
-  .modal-cat {
-    display: inline-block;
-    padding: 3px 10px;
-    background: var(--paper-deep);
-    border-radius: 2px;
-    font-size: 10px;
-    letter-spacing: 0.15em;
-    color: var(--moss);
-    margin-bottom: 14px;
-  }
-  .modal-desc {
-    font-size: 13px;
-    line-height: 1.8;
-    color: var(--ink);
-    margin-bottom: 16px;
-    padding: 12px;
-    background: rgba(255,255,255,0.4);
-    border-left: 2px solid var(--moss-light);
-  }
-  .modal-meta {
-    font-family: 'Klee One', cursive;
-    font-size: 12px;
-    color: var(--moss-light);
-    line-height: 1.8;
-    border-top: 1px dashed var(--paper-shadow);
-    padding-top: 12px;
-  }
-  .modal-meta strong {
-    display: inline-block;
-    width: 60px;
-    color: var(--moss);
-    font-weight: 400;
-  }
-  .modal-actions {
-    display: flex;
-    gap: 8px;
-    margin-top: 16px;
-    flex-wrap: wrap;
-  }
-  .btn-secondary, .btn-danger {
-    flex: 1;
-    min-width: 100px;
-    padding: 10px;
-    font-family: 'Shippori Mincho', serif;
-    font-size: 12px;
-    cursor: pointer;
-    border: 1px solid var(--moss-light);
-    background: transparent;
-    color: var(--moss);
-    letter-spacing: 0.1em;
-  }
-  .btn-danger {
-    border-color: var(--berry);
-    color: var(--berry);
-  }
+  .modal-name { font-size: 22px; font-weight: 600; margin-bottom: 4px; }
+  .modal-name-sci { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 13px; color: var(--moss); margin-bottom: 14px; }
+  .modal-cat { display: inline-block; padding: 3px 10px; background: var(--paper-deep); border-radius: 2px; font-size: 10px; letter-spacing: 0.15em; color: var(--moss); margin-bottom: 14px; }
+  .modal-desc { font-size: 13px; line-height: 1.8; color: var(--ink); margin-bottom: 16px; padding: 12px; background: rgba(255,255,255,0.4); border-left: 2px solid var(--moss-light); }
+  .modal-meta { font-family: 'Klee One', cursive; font-size: 12px; color: var(--moss-light); line-height: 1.8; border-top: 1px dashed var(--paper-shadow); padding-top: 12px; }
+  .modal-meta strong { display: inline-block; width: 60px; color: var(--moss); font-weight: 400; }
+  .modal-actions { display: flex; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .btn-secondary, .btn-danger { flex: 1; min-width: 100px; padding: 10px; font-family: 'Shippori Mincho', serif; font-size: 12px; cursor: pointer; border: 1px solid var(--moss-light); background: transparent; color: var(--moss); letter-spacing: 0.1em; }
+  .btn-danger { border-color: var(--berry); color: var(--berry); }
 
-  /* ========== Bottom Bar (Camera) ========== */
+  /* ===== Bottom Bar ===== */
   .bottom-bar {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
+    position: fixed; bottom: 0; left: 0; right: 0;
     padding: 14px 16px calc(14px + env(safe-area-inset-bottom));
     background: rgba(245,239,228,0.96);
     backdrop-filter: blur(10px);
     border-top: 1px solid var(--paper-shadow);
-    display: flex;
-    justify-content: center;
-    z-index: 100;
+    display: flex; justify-content: center; z-index: 100;
   }
   .camera-btn {
-    background: var(--moss);
-    color: var(--paper);
-    border: none;
+    background: var(--moss); color: var(--paper); border: none;
     padding: 14px 32px;
-    font-family: 'Shippori Mincho', serif;
-    font-size: 15px;
-    letter-spacing: 0.2em;
-    cursor: pointer;
-    border-radius: 2px;
+    font-family: 'Shippori Mincho', serif; font-size: 15px; letter-spacing: 0.2em;
+    cursor: pointer; border-radius: 2px;
     box-shadow: 0 4px 14px rgba(74,93,58,0.3);
-    display: flex;
-    align-items: center;
-    gap: 10px;
+    display: flex; align-items: center; gap: 10px;
     transition: transform 0.2s;
   }
   .camera-btn:active { transform: scale(0.97); }
   .camera-btn-icon { font-size: 18px; }
 
-  /* ========== Upload Modal ========== */
+  /* ===== Upload Modal ===== */
   .upload-modal { display: none; position: fixed; inset: 0; background: rgba(42,37,32,0.85); z-index: 2000; overflow-y: auto; backdrop-filter: blur(4px); }
   .upload-modal.show { display: block; animation: fade 0.3s ease; }
-  .upload-content {
-    background: var(--paper);
-    margin: 20px auto;
-    max-width: 500px;
-    padding: 28px 24px;
-    border: 1px solid var(--paper-shadow);
-    position: relative;
-  }
-  .upload-title {
-    font-size: 18px;
-    font-weight: 600;
-    text-align: center;
-    margin-bottom: 4px;
-    letter-spacing: 0.1em;
-  }
-  .upload-subtitle {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 11px;
-    color: var(--moss);
-    text-align: center;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    margin-bottom: 20px;
-  }
-  .preview-img {
-    width: 100%;
-    max-height: 280px;
-    object-fit: contain;
-    background: #1a1815;
-    margin-bottom: 16px;
-    display: block;
-  }
+  .upload-content { background: var(--paper); margin: 20px auto; max-width: 500px; padding: 28px 24px; border: 1px solid var(--paper-shadow); position: relative; }
+  .upload-title { font-size: 18px; font-weight: 600; text-align: center; margin-bottom: 4px; letter-spacing: 0.1em; }
+  .upload-subtitle { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 11px; color: var(--moss); text-align: center; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 20px; }
+  .preview-img { width: 100%; max-height: 280px; object-fit: contain; background: #1a1815; margin-bottom: 16px; display: block; }
   .form-group { margin-bottom: 14px; }
-  .form-label {
-    display: block;
-    font-family: 'Klee One', cursive;
-    font-size: 12px;
-    color: var(--moss);
-    margin-bottom: 6px;
-    letter-spacing: 0.1em;
-  }
-  .form-input, .form-textarea, .form-select {
-    width: 100%;
-    padding: 10px 12px;
-    border: 1px solid var(--paper-shadow);
-    background: #fefcf6;
-    font-family: 'Shippori Mincho', serif;
-    font-size: 14px;
-    color: var(--ink);
-    border-radius: 2px;
-  }
-  .form-input:focus, .form-textarea:focus, .form-select:focus {
-    outline: none;
-    border-color: var(--moss);
-  }
+  .form-label { display: block; font-family: 'Klee One', cursive; font-size: 12px; color: var(--moss); margin-bottom: 6px; letter-spacing: 0.1em; }
+  .form-input, .form-textarea, .form-select { width: 100%; padding: 10px 12px; border: 1px solid var(--paper-shadow); background: #fefcf6; font-family: 'Shippori Mincho', serif; font-size: 14px; color: var(--ink); border-radius: 2px; }
+  .form-input:focus, .form-textarea:focus, .form-select:focus { outline: none; border-color: var(--moss); }
   .form-textarea { resize: vertical; min-height: 60px; }
   .form-row { display: flex; gap: 8px; align-items: flex-end; }
   .form-row .form-group { flex: 1; }
-  .btn-icon {
-    padding: 10px 12px;
-    border: 1px solid var(--moss-light);
-    background: transparent;
-    color: var(--moss);
-    cursor: pointer;
-    font-size: 14px;
-    border-radius: 2px;
-    white-space: nowrap;
-    font-family: 'Klee One', cursive;
-  }
-
-  .ai-status {
-    padding: 10px 12px;
-    background: rgba(184,148,86,0.1);
-    border-left: 2px solid var(--gold);
-    font-family: 'Klee One', cursive;
-    font-size: 12px;
-    color: var(--bark);
-    margin-bottom: 14px;
-    display: none;
-  }
+  .btn-icon { padding: 10px 12px; border: 1px solid var(--moss-light); background: transparent; color: var(--moss); cursor: pointer; font-size: 14px; border-radius: 2px; white-space: nowrap; font-family: 'Klee One', cursive; }
+  .ai-status { padding: 10px 12px; background: rgba(184,148,86,0.1); border-left: 2px solid var(--gold); font-family: 'Klee One', cursive; font-size: 12px; color: var(--bark); margin-bottom: 14px; display: none; }
   .ai-status.show { display: block; }
-  .ai-status.loading::before {
-    content: '◐';
-    display: inline-block;
-    margin-right: 6px;
-    animation: spin 1s linear infinite;
-  }
+  .ai-status.loading::before { content: '◐'; display: inline-block; margin-right: 6px; animation: spin 1s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
-
-  .upload-actions {
-    display: flex;
-    gap: 10px;
-    margin-top: 8px;
-  }
-  .btn-primary {
-    flex: 1;
-    padding: 12px;
-    background: var(--moss);
-    color: var(--paper);
-    border: none;
-    font-family: 'Shippori Mincho', serif;
-    font-size: 14px;
-    letter-spacing: 0.15em;
-    cursor: pointer;
-    border-radius: 2px;
-  }
+  .upload-actions { display: flex; gap: 10px; margin-top: 8px; }
+  .btn-primary { flex: 1; padding: 12px; background: var(--moss); color: var(--paper); border: none; font-family: 'Shippori Mincho', serif; font-size: 14px; letter-spacing: 0.15em; cursor: pointer; border-radius: 2px; }
   .btn-primary:disabled { opacity: 0.5; cursor: not-allowed; }
-  .btn-cancel {
-    padding: 12px 20px;
-    background: transparent;
-    color: var(--moss);
-    border: 1px solid var(--moss-light);
-    font-family: 'Shippori Mincho', serif;
-    font-size: 14px;
-    cursor: pointer;
-    border-radius: 2px;
-  }
+  .btn-cancel { padding: 12px 20px; background: transparent; color: var(--moss); border: 1px solid var(--moss-light); font-family: 'Shippori Mincho', serif; font-size: 14px; cursor: pointer; border-radius: 2px; }
 
-  /* ========== Stats ========== */
-  .stats {
-    display: flex;
-    justify-content: center;
-    gap: 24px;
-    padding: 8px 16px 16px;
-    font-family: 'Klee One', cursive;
-    font-size: 11px;
-    color: var(--moss-light);
-    letter-spacing: 0.1em;
-  }
-  .stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-style: italic;
-    font-size: 16px;
-    color: var(--moss);
-    margin-right: 4px;
-  }
+  /* ===== Stats ===== */
+  .stats { display: flex; justify-content: center; gap: 24px; padding: 8px 16px 16px; font-family: 'Klee One', cursive; font-size: 11px; color: var(--moss-light); letter-spacing: 0.1em; }
+  .stat-num { font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 16px; color: var(--moss); margin-right: 4px; }
+  .ornament { text-align: center; color: var(--moss); margin: 8px 0; font-size: 14px; letter-spacing: 0.5em; opacity: 0.5; }
 
-  .ornament {
-    text-align: center;
-    color: var(--moss);
-    margin: 8px 0;
-    font-size: 14px;
-    letter-spacing: 0.5em;
-    opacity: 0.5;
-  }
+  /* ===== Settings Btn ===== */
+  .settings-btn { position: absolute; top: 24px; right: 16px; background: transparent; border: 1px solid var(--paper-shadow); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: var(--moss); font-size: 14px; display: flex; align-items: center; justify-content: center; }
 
-  /* ========== Settings Button ========== */
-  .settings-btn {
-    position: absolute;
-    top: 24px;
-    right: 16px;
-    background: transparent;
-    border: 1px solid var(--paper-shadow);
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    cursor: pointer;
-    color: var(--moss);
-    font-size: 14px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  /* ========== API Key Notice ========== */
-  .api-notice {
-    background: rgba(184,148,86,0.15);
-    border: 1px solid var(--gold);
-    padding: 14px 16px;
-    margin: 12px 16px;
-    border-radius: 2px;
-    font-family: 'Klee One', cursive;
-    font-size: 12px;
-    color: var(--bark);
-    line-height: 1.7;
-    display: none;
-  }
+  /* ===== API Notice ===== */
+  .api-notice { background: rgba(184,148,86,0.15); border: 1px solid var(--gold); padding: 14px 16px; margin: 12px 16px; border-radius: 2px; font-family: 'Klee One', cursive; font-size: 12px; color: var(--bark); line-height: 1.7; display: none; }
   .api-notice.show { display: block; }
   .api-notice strong { color: var(--moss); }
   .api-notice a { color: var(--moss); text-decoration: underline; }
-  .api-notice button {
-    background: var(--moss);
-    color: var(--paper);
-    border: none;
-    padding: 8px 16px;
-    margin-top: 8px;
-    font-family: 'Shippori Mincho', serif;
-    font-size: 12px;
-    cursor: pointer;
-    letter-spacing: 0.1em;
-    border-radius: 2px;
-  }
+  .api-notice button { background: var(--moss); color: var(--paper); border: none; padding: 8px 16px; margin-top: 8px; font-family: 'Shippori Mincho', serif; font-size: 12px; cursor: pointer; letter-spacing: 0.1em; border-radius: 2px; }
 </style>
 </head>
 <body>
 
+<!-- Loading Screen -->
+<div id="loading-screen" class="loading-screen">
+  <div class="loading-ornament">❦</div>
+  <div>読み込み中...</div>
+</div>
+
+<!-- Auth Screen -->
+<div id="auth-screen" class="auth-screen" style="display:none;">
+  <div class="auth-box">
+    <div class="auth-header">
+      <div class="title">Botanical Walk Diary</div>
+      <div class="title-jp">散 歩 図 鑑</div>
+      <div class="subtitle">〜 日々の小さな出会いを綴る 〜</div>
+    </div>
+    <div class="auth-mode-title" id="auth-mode-title">ログイン</div>
+    <button class="btn-google" id="btn-google">
+      <svg width="18" height="18" viewBox="0 0 18 18" xmlns="http://www.w3.org/2000/svg">
+        <path fill="#4285F4" d="M16.51 8H8.98v3h4.3c-.18 1-.74 1.48-1.6 2.04v2.01h2.6a7.8 7.8 0 0 0 2.38-5.88c0-.57-.05-.66-.15-1.18z"/>
+        <path fill="#34A853" d="M8.98 17c2.16 0 3.97-.72 5.3-1.94l-2.6-2.01a4.8 4.8 0 0 1-7.18-2.54H1.83v2.07A8 8 0 0 0 8.98 17z"/>
+        <path fill="#FBBC05" d="M4.5 10.52a4.8 4.8 0 0 1 0-3.04V5.41H1.83a8 8 0 0 0 0 7.18l2.67-2.07z"/>
+        <path fill="#EA4335" d="M8.98 4.18c1.17 0 2.23.4 3.06 1.2l2.3-2.3A8 8 0 0 0 1.83 5.4L4.5 7.49a4.77 4.77 0 0 1 4.48-3.3z"/>
+      </svg>
+      Googleでログイン
+    </button>
+    <div class="auth-divider"><span>または</span></div>
+    <div id="auth-name-group" class="form-group" style="display:none;">
+      <label class="form-label">表示名</label>
+      <input type="text" class="form-input" id="auth-name" placeholder="ニックネーム">
+    </div>
+    <div class="form-group">
+      <label class="form-label">メールアドレス</label>
+      <input type="email" class="form-input" id="auth-email" placeholder="example@email.com" autocomplete="email">
+    </div>
+    <div class="form-group">
+      <label class="form-label">パスワード</label>
+      <input type="password" class="form-input" id="auth-password" placeholder="6文字以上" autocomplete="current-password">
+    </div>
+    <div class="auth-error" id="auth-error" style="display:none;"></div>
+    <button class="btn-primary" id="btn-auth-submit" style="width:100%;margin-top:4px;">ログイン</button>
+    <button class="btn-auth-toggle" id="btn-auth-toggle">新規登録はこちら →</button>
+  </div>
+</div>
+
+<!-- Main App -->
+<div id="app-screen" style="display:none;">
+
 <header>
+  <div class="user-badge-wrap"><span id="user-badge"></span></div>
   <div class="title">Botanical Walk Diary</div>
   <div class="title-jp">散 歩 図 鑑</div>
   <div class="subtitle">〜 日々の小さな出会いを綴る 〜</div>
   <button class="settings-btn" id="settings-btn" title="設定">⚙</button>
 </header>
+
+<!-- Migration Notice -->
+<div id="migration-notice" class="migration-notice" style="display:none;">
+  <strong>✦ 端末内にデータが見つかりました</strong><br>
+  以前の記録が <span id="migration-count">0</span> 件あります。クラウドに移行しますか？<br>
+  <small style="color:var(--moss-light);">移行後も端末のデータはそのまま保持されます。</small>
+  <div class="migration-actions">
+    <button class="btn-icon" id="btn-migrate" style="flex:1;">クラウドに移行する</button>
+    <button class="btn-icon" id="btn-migrate-skip" style="flex:1;color:var(--moss-light);">後で</button>
+  </div>
+</div>
 
 <div class="api-notice" id="api-notice">
   <strong>✦ AIによる自動識別を使うには</strong><br>
@@ -659,7 +469,6 @@
 
 <div class="ornament">❦</div>
 
-<!-- Gallery View -->
 <div class="view active" id="view-gallery">
   <div class="gallery" id="gallery"></div>
   <div class="empty" id="empty-gallery" style="display:none;">
@@ -668,12 +477,10 @@
   </div>
 </div>
 
-<!-- Map View -->
 <div class="view" id="view-map">
   <div id="map"></div>
 </div>
 
-<!-- Timeline View -->
 <div class="view" id="view-timeline">
   <div class="timeline" id="timeline"></div>
   <div class="empty" id="empty-timeline" style="display:none;">
@@ -682,7 +489,6 @@
   </div>
 </div>
 
-<!-- Camera button -->
 <div class="bottom-bar">
   <button class="camera-btn" id="camera-btn">
     <span class="camera-btn-icon">✦</span>
@@ -690,6 +496,8 @@
   </button>
 </div>
 <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none;">
+
+</div><!-- /#app-screen -->
 
 <!-- Upload Modal -->
 <div class="upload-modal" id="upload-modal">
@@ -776,11 +584,12 @@
     </div>
     <div style="border-top:1px dashed var(--paper-shadow);margin:16px 0;padding-top:16px;">
       <div class="form-label">データ管理</div>
-      <div style="display:flex;gap:8px;flex-wrap:wrap;">
-        <button class="btn-icon" id="export-btn" style="flex:1;">記録をエクスポート</button>
-        <button class="btn-icon" id="import-btn" style="flex:1;">記録をインポート</button>
-      </div>
-      <input type="file" id="import-input" accept=".json" style="display:none;">
+      <button class="btn-icon" id="export-btn" style="width:100%;">記録をエクスポート（JSON）</button>
+    </div>
+    <div style="border-top:1px dashed var(--paper-shadow);margin:16px 0;padding-top:16px;">
+      <div class="form-label">アカウント</div>
+      <div id="settings-user-info" style="font-family:'Klee One',cursive;font-size:12px;color:var(--moss-light);margin-bottom:10px;"></div>
+      <button class="btn-icon" id="btn-signout" style="width:100%;color:var(--berry);border-color:var(--berry);">サインアウト</button>
     </div>
     <div class="upload-actions">
       <button class="btn-cancel" id="settings-cancel">閉じる</button>
@@ -789,10 +598,26 @@
   </div>
 </div>
 
-<script>
-// ============ Storage ============
-const STORAGE_KEY = 'walk-diary-entries';
-const SETTINGS_KEY = 'walk-diary-settings';
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
+import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
+import { getFirestore, collection, doc, getDocs, setDoc, updateDoc, deleteDoc, query, where, serverTimestamp, Timestamp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+
+// ============ Firebase Init ============
+const firebaseConfig = {
+  apiKey: "AIzaSyBsQQt6MEZXpAlvm1JWO0092X6OD04xIVI",
+  authDomain: "walk-diary-35e01.firebaseapp.com",
+  projectId: "walk-diary-35e01",
+  storageBucket: "walk-diary-35e01.firebasestorage.app",
+  messagingSenderId: "371376455663",
+  appId: "1:371376455663:web:08525e754d9cbb938d401a"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+// ============ App State ============
+let currentUser = null;
 let entries = [];
 let settings = { apiKey: '', autoIdentify: true };
 let currentEntry = null;
@@ -800,84 +625,300 @@ let pendingImageData = null;
 let editingId = null;
 let mapInstance = null;
 let mapMarkers = [];
+let isAuthMode = 'login';
 
-function loadEntries() {
-  try {
-    const data = localStorage.getItem(STORAGE_KEY);
-    entries = data ? JSON.parse(data) : [];
-  } catch (e) {
+// ============ Screen Management ============
+function showLoading() {
+  document.getElementById('loading-screen').style.display = 'flex';
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display = 'none';
+}
+function showAuth() {
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'flex';
+  document.getElementById('app-screen').style.display = 'none';
+}
+function showApp() {
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('auth-screen').style.display = 'none';
+  document.getElementById('app-screen').style.display = 'block';
+  const name = currentUser.displayName || currentUser.email?.split('@')[0] || '';
+  document.getElementById('user-badge').textContent = name;
+}
+
+// ============ Auth State ============
+onAuthStateChanged(auth, async (user) => {
+  if (user) {
+    currentUser = user;
+    loadSettings();
+    showApp();
+    await ensureUserProfile();
+    await loadEntries();
+    renderAll();
+    updateApiNotice();
+    checkMigrationNeeded();
+  } else {
+    currentUser = null;
     entries = [];
+    showAuth();
   }
-}
+});
 
-function saveEntries() {
+async function ensureUserProfile() {
   try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+    await setDoc(doc(db, 'users', currentUser.uid), {
+      name: currentUser.displayName || currentUser.email?.split('@')[0] || '名無し',
+      photoURL: currentUser.photoURL || '',
+      email: currentUser.email || '',
+      updatedAt: serverTimestamp()
+    }, { merge: true });
   } catch (e) {
-    alert('保存に失敗しました。容量がいっぱいの可能性があります。');
+    console.warn('Profile update failed:', e);
   }
 }
 
+// ============ Auth UI ============
+document.getElementById('btn-google').addEventListener('click', async () => {
+  setAuthError('');
+  try {
+    await signInWithPopup(auth, new GoogleAuthProvider());
+  } catch (e) {
+    if (e.code !== 'auth/popup-closed-by-user') setAuthError(authErrMsg(e.code));
+  }
+});
+
+document.getElementById('btn-auth-submit').addEventListener('click', async () => {
+  const email = document.getElementById('auth-email').value.trim();
+  const password = document.getElementById('auth-password').value;
+  if (!email || !password) { setAuthError('メールアドレスとパスワードを入力してください'); return; }
+  setAuthError('');
+  const btn = document.getElementById('btn-auth-submit');
+  btn.disabled = true;
+  try {
+    if (isAuthMode === 'register') {
+      const name = document.getElementById('auth-name').value.trim() || email.split('@')[0];
+      const cred = await createUserWithEmailAndPassword(auth, email, password);
+      await updateProfile(cred.user, { displayName: name });
+    } else {
+      await signInWithEmailAndPassword(auth, email, password);
+    }
+  } catch (e) {
+    setAuthError(authErrMsg(e.code));
+    btn.disabled = false;
+  }
+});
+
+document.getElementById('btn-auth-toggle').addEventListener('click', () => {
+  isAuthMode = isAuthMode === 'login' ? 'register' : 'login';
+  const reg = isAuthMode === 'register';
+  document.getElementById('auth-name-group').style.display = reg ? 'block' : 'none';
+  document.getElementById('btn-auth-submit').textContent = reg ? '新規登録' : 'ログイン';
+  document.getElementById('btn-auth-toggle').textContent = reg ? '← ログインはこちら' : '新規登録はこちら →';
+  document.getElementById('auth-mode-title').textContent = reg ? '新規登録' : 'ログイン';
+  setAuthError('');
+});
+
+function setAuthError(msg) {
+  const el = document.getElementById('auth-error');
+  el.textContent = msg;
+  el.style.display = msg ? 'block' : 'none';
+}
+function authErrMsg(code) {
+  return ({
+    'auth/user-not-found': 'このメールアドレスは登録されていません',
+    'auth/wrong-password': 'パスワードが正しくありません',
+    'auth/invalid-credential': 'メールアドレスまたはパスワードが正しくありません',
+    'auth/email-already-in-use': 'このメールアドレスはすでに使われています',
+    'auth/weak-password': 'パスワードは6文字以上で設定してください',
+    'auth/invalid-email': 'メールアドレスの形式が正しくありません',
+    'auth/too-many-requests': 'ログイン試行が多すぎます。しばらくお待ちください',
+  })[code] || `エラーが発生しました（${code}）`;
+}
+
+document.getElementById('btn-signout').addEventListener('click', async () => {
+  if (!confirm('サインアウトしますか？')) return;
+  document.getElementById('settings-modal').classList.remove('show');
+  await signOut(auth);
+  entries = [];
+});
+
+// ============ Firestore: Load ============
+async function loadEntries() {
+  if (!currentUser) return;
+  try {
+    const q = query(collection(db, 'entries'), where('ownerId', '==', currentUser.uid));
+    const snap = await getDocs(q);
+    entries = snap.docs.map(d => {
+      const data = d.data();
+      return {
+        id: d.id,
+        name: data.name || '',
+        scientificName: data.scientificName || '',
+        category: data.category || 'その他',
+        description: data.description || '',
+        location: data.location || '',
+        coords: data.coords || null,
+        image: data.photoData || '',
+        date: data.date?.toDate?.()?.toISOString() || new Date().toISOString(),
+        ownerId: data.ownerId,
+      };
+    });
+    entries.sort((a, b) => new Date(b.date) - new Date(a.date));
+  } catch (e) {
+    console.error('loadEntries:', e);
+    alert('記録の読み込みに失敗しました: ' + e.message);
+  }
+}
+
+// ============ Firestore: Save new ============
+async function saveNewEntry(entryData, base64Image) {
+  const entryRef = doc(collection(db, 'entries'));
+  await setDoc(entryRef, {
+    ownerId: currentUser.uid,
+    ownerName: currentUser.displayName || currentUser.email?.split('@')[0] || '名無し',
+    name: entryData.name,
+    scientificName: entryData.scientificName || '',
+    category: entryData.category || 'その他',
+    description: entryData.description || '',
+    location: entryData.location || '',
+    coords: entryData.coords || null,
+    photoData: base64Image,
+    date: serverTimestamp(),
+    visibility: 'private',
+    shareToken: null,
+  });
+  return {
+    id: entryRef.id,
+    name: entryData.name,
+    scientificName: entryData.scientificName || '',
+    category: entryData.category || 'その他',
+    description: entryData.description || '',
+    location: entryData.location || '',
+    coords: entryData.coords || null,
+    image: base64Image,
+    date: new Date().toISOString(),
+    ownerId: currentUser.uid,
+  };
+}
+
+// ============ Firestore: Update ============
+async function updateFirestoreEntry(id, data) {
+  await updateDoc(doc(db, 'entries', id), {
+    name: data.name,
+    scientificName: data.scientificName || '',
+    category: data.category || 'その他',
+    description: data.description || '',
+    location: data.location || '',
+    coords: data.coords || null,
+  });
+}
+
+// ============ Firestore: Delete ============
+async function deleteFirestoreEntry(id) {
+  await deleteDoc(doc(db, 'entries', id));
+}
+
+// ============ Migration ============
+function checkMigrationNeeded() {
+  if (localStorage.getItem('walk-diary-migrated-' + currentUser.uid)) return;
+  try {
+    const local = JSON.parse(localStorage.getItem('walk-diary-entries') || '[]');
+    if (!Array.isArray(local) || local.length === 0) return;
+    document.getElementById('migration-count').textContent = local.length;
+    document.getElementById('migration-notice').style.display = 'block';
+  } catch (e) {}
+}
+
+document.getElementById('btn-migrate').addEventListener('click', async () => {
+  const btn = document.getElementById('btn-migrate');
+  btn.disabled = true;
+  btn.textContent = '移行中...';
+  try {
+    const local = JSON.parse(localStorage.getItem('walk-diary-entries') || '[]');
+    let ok = 0, ng = 0;
+    for (const e of local) {
+      try {
+        const entryRef = doc(collection(db, 'entries'));
+        await setDoc(entryRef, {
+          ownerId: currentUser.uid,
+          ownerName: currentUser.displayName || currentUser.email?.split('@')[0] || '名無し',
+          name: e.name || '',
+          scientificName: e.scientificName || '',
+          category: e.category || 'その他',
+          description: e.description || '',
+          location: e.location || '',
+          coords: e.coords || null,
+          photoData: e.image || '',
+          date: Timestamp.fromDate(new Date(e.date || Date.now())),
+          visibility: 'private',
+          shareToken: null,
+        });
+        ok++;
+      } catch (err) {
+        console.error('Migration failed for:', e.name, err);
+        ng++;
+      }
+    }
+    localStorage.setItem('walk-diary-migrated-' + currentUser.uid, 'true');
+    document.getElementById('migration-notice').style.display = 'none';
+    await loadEntries();
+    renderAll();
+    alert(ng === 0 ? `${ok}件をクラウドに移行しました！` : `${ok}件成功、${ng}件失敗しました`);
+  } catch (e) {
+    alert('移行中にエラーが発生しました: ' + e.message);
+    btn.disabled = false;
+    btn.textContent = 'クラウドに移行する';
+  }
+});
+
+document.getElementById('btn-migrate-skip').addEventListener('click', () => {
+  document.getElementById('migration-notice').style.display = 'none';
+});
+
+// ============ Settings ============
 function loadSettings() {
   try {
-    const data = localStorage.getItem(SETTINGS_KEY);
+    const data = localStorage.getItem('walk-diary-settings');
     if (data) settings = { ...settings, ...JSON.parse(data) };
   } catch (e) {}
 }
-
 function saveSettings() {
-  try {
-    localStorage.setItem(SETTINGS_KEY, JSON.stringify(settings));
-  } catch (e) {}
+  try { localStorage.setItem('walk-diary-settings', JSON.stringify(settings)); } catch (e) {}
+}
+function openSettings() {
+  document.getElementById('api-key-input').value = settings.apiKey || '';
+  document.getElementById('auto-identify').checked = settings.autoIdentify;
+  document.getElementById('upload-modal').classList.remove('show');
+  document.getElementById('settings-user-info').textContent =
+    currentUser?.displayName ? `${currentUser.displayName}（${currentUser.email}）` : (currentUser?.email || '');
+  document.getElementById('settings-modal').classList.add('show');
+}
+function updateApiNotice() {
+  document.getElementById('api-notice').classList.toggle('show', !settings.apiKey);
 }
 
-// ============ Helpers ============
-function fmtDate(iso) {
-  const d = new Date(iso);
-  const y = d.getFullYear();
-  const m = String(d.getMonth() + 1).padStart(2, '0');
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${y}.${m}.${day}`;
-}
+document.getElementById('settings-btn').addEventListener('click', openSettings);
+document.getElementById('api-notice-btn').addEventListener('click', openSettings);
+document.getElementById('settings-cancel').addEventListener('click', () => {
+  document.getElementById('settings-modal').classList.remove('show');
+});
+document.getElementById('settings-save').addEventListener('click', () => {
+  settings.apiKey = document.getElementById('api-key-input').value.trim();
+  settings.autoIdentify = document.getElementById('auto-identify').checked;
+  saveSettings();
+  document.getElementById('settings-modal').classList.remove('show');
+  updateApiNotice();
+});
 
-function fmtTime(iso) {
-  const d = new Date(iso);
-  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
-}
-
-function fmtDateLong(iso) {
-  const d = new Date(iso);
-  const months = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-  return `${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
-}
-
-function fmtDateJp(iso) {
-  const d = new Date(iso);
-  const days = ['日','月','火','水','木','金','土'];
-  return `${d.getMonth()+1}月${d.getDate()}日（${days[d.getDay()]}）`;
-}
-
-function groupByDate(arr) {
-  const groups = {};
-  arr.forEach(e => {
-    const key = fmtDate(e.date);
-    if (!groups[key]) groups[key] = [];
-    groups[key].push(e);
-  });
-  return groups;
-}
-
-// ============ AI Identification (Gemini) ============
+// ============ AI Identification ============
 async function identifyImage(base64) {
   const aiStatus = document.getElementById('ai-status');
-
   if (!settings.apiKey) {
     aiStatus.classList.add('show');
     aiStatus.classList.remove('loading');
     aiStatus.textContent = '⚙ APIキー未設定 — 右上の設定から登録してください（手動入力でも記録できます）';
     return null;
   }
-
   aiStatus.classList.add('show', 'loading');
   aiStatus.textContent = 'AIが画像を解析中...';
 
@@ -892,7 +933,6 @@ JSONのみを返してください（マークダウンや説明文は不要）�
 }
 識別が難しい場合も、可能な限り推測で答えてください。`;
 
-  // Helper for showing detailed error in UI
   const showDebugError = (title, detail) => {
     aiStatus.classList.remove('loading');
     aiStatus.innerHTML = `
@@ -900,8 +940,7 @@ JSONのみを返してください（マークダウンや説明文は不要）�
       <details style="margin-top:6px;">
         <summary style="cursor:pointer;color:var(--moss);font-size:11px;">詳細を表示</summary>
         <pre style="font-size:10px;white-space:pre-wrap;word-break:break-all;background:rgba(0,0,0,0.05);padding:8px;margin-top:6px;border-radius:2px;max-height:200px;overflow:auto;font-family:monospace;">${escapeHtml(detail)}</pre>
-      </details>
-    `;
+      </details>`;
   };
 
   let response;
@@ -912,69 +951,47 @@ JSONのみを返してください（マークダウンや説明文は不要）�
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          contents: [{
-            parts: [
-              { text: prompt },
-              { inline_data: { mime_type: 'image/jpeg', data: imageData } }
-            ]
-          }],
-          generationConfig: {
-            temperature: 0.4,
-            responseMimeType: 'application/json'
-          }
+          contents: [{ parts: [{ text: prompt }, { inline_data: { mime_type: 'image/jpeg', data: imageData } }] }],
+          generationConfig: { temperature: 0.4, responseMimeType: 'application/json' }
         })
       }
     );
   } catch (netErr) {
-    showDebugError('ネットワークエラー', `Type: ${netErr.name}\nMessage: ${netErr.message}\n\n→ インターネット接続またはCORS制限の可能性`);
+    showDebugError('ネットワークエラー', `Type: ${netErr.name}\nMessage: ${netErr.message}`);
     return null;
   }
 
   let rawText = '';
-  try {
-    rawText = await response.text();
-  } catch (e) {
+  try { rawText = await response.text(); } catch (e) {
     showDebugError('レスポンス読み取り失敗', `Status: ${response.status}\nError: ${e.message}`);
     return null;
   }
-
   if (!response.ok) {
-    showDebugError(
-      `APIエラー (HTTP ${response.status})`,
-      `URL: generativelanguage.googleapis.com\nStatus: ${response.status} ${response.statusText}\n\nResponse:\n${rawText.slice(0, 1500)}`
-    );
+    showDebugError(`APIエラー (HTTP ${response.status})`, `Status: ${response.status} ${response.statusText}\n\n${rawText.slice(0, 1500)}`);
     return null;
   }
 
   let data;
-  try {
-    data = JSON.parse(rawText);
-  } catch (e) {
-    showDebugError('JSONパース失敗（外側）', `Status: ${response.status}\nRaw response (先頭500文字):\n${rawText.slice(0, 500)}`);
+  try { data = JSON.parse(rawText); } catch (e) {
+    showDebugError('JSONパース失敗', `Status: ${response.status}\nRaw:\n${rawText.slice(0, 500)}`);
     return null;
   }
-
-  // Check for prompt blocked
   if (data?.promptFeedback?.blockReason) {
-    showDebugError('リクエストがブロックされました', `Reason: ${data.promptFeedback.blockReason}\n\nFull:\n${JSON.stringify(data.promptFeedback, null, 2)}`);
+    showDebugError('リクエストがブロックされました', `Reason: ${data.promptFeedback.blockReason}`);
     return null;
   }
-
   const text = data?.candidates?.[0]?.content?.parts?.[0]?.text;
   if (!text) {
-    showDebugError('AIからの応答が空でした', `Full response:\n${JSON.stringify(data, null, 2).slice(0, 1500)}`);
+    showDebugError('AIからの応答が空でした', JSON.stringify(data, null, 2).slice(0, 1500));
     return null;
   }
-
-  let cleaned = text.trim().replace(/```json\s*/g, '').replace(/```\s*/g, '').trim();
   let result;
   try {
-    result = JSON.parse(cleaned);
+    result = JSON.parse(text.trim().replace(/```json\s*/g, '').replace(/```\s*/g, '').trim());
   } catch (e) {
-    showDebugError('AI応答のJSONパース失敗', `Parse error: ${e.message}\n\nAI returned:\n${text.slice(0, 800)}`);
+    showDebugError('AI応答のJSONパース失敗', `Error: ${e.message}\n\nAI returned:\n${text.slice(0, 800)}`);
     return null;
   }
-
   aiStatus.classList.remove('loading');
   aiStatus.innerHTML = '✦ AI識別完了 — 必要に応じて修正してください';
   return result;
@@ -989,14 +1006,11 @@ document.getElementById('file-input').addEventListener('change', async (e) => {
   const file = e.target.files[0];
   if (!file) return;
 
-  // Resize image
   const img = await fileToImage(file);
-  const resized = resizeImage(img, 1200);
+  const resized = resizeImage(img, 800);
   pendingImageData = resized;
 
   document.getElementById('preview-img').src = resized;
-
-  // Reset form
   editingId = null;
   document.getElementById('input-name').value = '';
   document.getElementById('input-sci').value = '';
@@ -1004,11 +1018,9 @@ document.getElementById('file-input').addEventListener('change', async (e) => {
   document.getElementById('input-desc').value = '';
   document.getElementById('input-location').value = '';
   document.getElementById('ai-status').classList.remove('show', 'loading');
-
   document.getElementById('upload-modal').classList.add('show');
   e.target.value = '';
 
-  // Trigger AI identification (only if enabled and key set)
   if (settings.autoIdentify && settings.apiKey) {
     const result = await identifyImage(resized);
     if (result) {
@@ -1025,17 +1037,14 @@ document.getElementById('file-input').addEventListener('change', async (e) => {
     aiStatus.classList.remove('loading');
     aiStatus.innerHTML = '⚙ APIキー未設定 — <a href="#" id="open-settings-link" style="color:var(--moss);">設定を開く</a>（手動入力でも記録できます）';
     document.getElementById('open-settings-link')?.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      openSettings();
+      ev.preventDefault(); openSettings();
     });
   }
 
-  // Try to get GPS
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(async pos => {
       const { latitude, longitude } = pos.coords;
       window._pendingCoords = { lat: latitude, lng: longitude };
-      // Reverse geocode using Nominatim
       try {
         const res = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=16&accept-language=ja`);
         const geo = await res.json();
@@ -1086,57 +1095,59 @@ function fileToImage(file) {
 
 function resizeImage(img, maxDim) {
   let { width, height } = img;
-  if (width > height && width > maxDim) {
-    height = (height * maxDim) / width;
-    width = maxDim;
-  } else if (height > maxDim) {
-    width = (width * maxDim) / height;
-    height = maxDim;
-  }
+  if (width > height && width > maxDim) { height = (height * maxDim) / width; width = maxDim; }
+  else if (height > maxDim) { width = (width * maxDim) / height; height = maxDim; }
   const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
-  const ctx = canvas.getContext('2d');
-  ctx.drawImage(img, 0, 0, width, height);
-  return canvas.toDataURL('image/jpeg', 0.85);
+  canvas.width = width; canvas.height = height;
+  canvas.getContext('2d').drawImage(img, 0, 0, width, height);
+  return canvas.toDataURL('image/jpeg', 0.75);
 }
 
 // ============ Save ============
-document.getElementById('btn-save').addEventListener('click', () => {
+document.getElementById('btn-save').addEventListener('click', async () => {
   const name = document.getElementById('input-name').value.trim();
   if (!name) { alert('名称を入力してください'); return; }
 
-  if (editingId) {
-    const entry = entries.find(e => e.id === editingId);
-    if (entry) {
-      entry.name = name;
-      entry.scientificName = document.getElementById('input-sci').value.trim();
-      entry.category = document.getElementById('input-category').value;
-      entry.description = document.getElementById('input-desc').value.trim();
-      entry.location = document.getElementById('input-location').value.trim();
-      if (window._pendingCoords) {
-        entry.coords = window._pendingCoords;
-      }
-    }
-  } else {
-    const entry = {
-      id: 'e_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
-      date: new Date().toISOString(),
-      image: pendingImageData,
-      name: name,
-      scientificName: document.getElementById('input-sci').value.trim(),
-      category: document.getElementById('input-category').value,
-      description: document.getElementById('input-desc').value.trim(),
-      location: document.getElementById('input-location').value.trim(),
-      coords: window._pendingCoords || null
-    };
-    entries.unshift(entry);
-  }
+  const btn = document.getElementById('btn-save');
+  btn.disabled = true;
+  btn.textContent = '保存中...';
 
-  window._pendingCoords = null;
-  saveEntries();
-  closeUploadModal();
-  renderAll();
+  try {
+    if (editingId) {
+      const entry = entries.find(e => e.id === editingId);
+      if (entry) {
+        const updates = {
+          name,
+          scientificName: document.getElementById('input-sci').value.trim(),
+          category: document.getElementById('input-category').value,
+          description: document.getElementById('input-desc').value.trim(),
+          location: document.getElementById('input-location').value.trim(),
+          coords: window._pendingCoords || entry.coords,
+        };
+        await updateFirestoreEntry(editingId, updates);
+        Object.assign(entry, updates);
+      }
+    } else {
+      const entryData = {
+        name,
+        scientificName: document.getElementById('input-sci').value.trim(),
+        category: document.getElementById('input-category').value,
+        description: document.getElementById('input-desc').value.trim(),
+        location: document.getElementById('input-location').value.trim(),
+        coords: window._pendingCoords || null,
+      };
+      const saved = await saveNewEntry(entryData, pendingImageData);
+      if (saved) entries.unshift(saved);
+    }
+    window._pendingCoords = null;
+    closeUploadModal();
+    renderAll();
+  } catch (e) {
+    alert('保存に失敗しました: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '記録する';
+  }
 });
 
 document.getElementById('btn-cancel').addEventListener('click', closeUploadModal);
@@ -1160,14 +1171,42 @@ document.querySelectorAll('.tab').forEach(t => {
   });
 });
 
+// ============ Helpers ============
+function fmtDate(iso) {
+  const d = new Date(iso);
+  return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+}
+function fmtTime(iso) {
+  const d = new Date(iso);
+  return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+}
+function fmtDateLong(iso) {
+  const d = new Date(iso);
+  const m = ['JAN','FEB','MAR','APR','MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
+  return `${d.getDate()} ${m[d.getMonth()]} ${d.getFullYear()}`;
+}
+function fmtDateJp(iso) {
+  const d = new Date(iso);
+  return `${d.getMonth()+1}月${d.getDate()}日（${'日月火水木金土'[d.getDay()]}）`;
+}
+function groupByDate(arr) {
+  const g = {};
+  arr.forEach(e => { const k = fmtDate(e.date); if (!g[k]) g[k] = []; g[k].push(e); });
+  return g;
+}
+function escapeHtml(s) {
+  if (!s) return '';
+  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+
 // ============ Render ============
 function renderStats() {
-  const statsEl = document.getElementById('stats');
-  if (entries.length === 0) { statsEl.innerHTML = ''; return; }
+  const el = document.getElementById('stats');
+  if (entries.length === 0) { el.innerHTML = ''; return; }
   const cats = {};
   entries.forEach(e => { cats[e.category] = (cats[e.category] || 0) + 1; });
   const dates = new Set(entries.map(e => fmtDate(e.date))).size;
-  statsEl.innerHTML = `
+  el.innerHTML = `
     <span><span class="stat-num">${entries.length}</span>件の記録</span>
     <span><span class="stat-num">${dates}</span>日の散歩</span>
     <span><span class="stat-num">${Object.keys(cats).length}</span>分類</span>
@@ -1177,13 +1216,11 @@ function renderStats() {
 function renderGallery() {
   const g = document.getElementById('gallery');
   const empty = document.getElementById('empty-gallery');
-  if (entries.length === 0) {
-    g.innerHTML = ''; empty.style.display = 'block'; return;
-  }
+  if (entries.length === 0) { g.innerHTML = ''; empty.style.display = 'block'; return; }
   empty.style.display = 'none';
   g.innerHTML = entries.map(e => `
     <div class="card" data-id="${e.id}">
-      <img src="${e.image}" alt="${e.name}" loading="lazy">
+      <img src="${escapeHtml(e.image)}" alt="${escapeHtml(e.name)}" loading="lazy">
       <div class="card-info">
         <div class="card-name">${escapeHtml(e.name)}</div>
         ${e.scientificName ? `<div class="card-name-sci">${escapeHtml(e.scientificName)}</div>` : ''}
@@ -1194,41 +1231,32 @@ function renderGallery() {
       </div>
     </div>
   `).join('');
-  g.querySelectorAll('.card').forEach(c => {
-    c.addEventListener('click', () => showDetail(c.dataset.id));
-  });
+  g.querySelectorAll('.card').forEach(c => c.addEventListener('click', () => showDetail(c.dataset.id)));
 }
 
 function renderTimeline() {
   const tl = document.getElementById('timeline');
   const empty = document.getElementById('empty-timeline');
-  if (entries.length === 0) {
-    tl.innerHTML = ''; empty.style.display = 'block'; return;
-  }
+  if (entries.length === 0) { tl.innerHTML = ''; empty.style.display = 'block'; return; }
   empty.style.display = 'none';
   const groups = groupByDate(entries);
-  const dates = Object.keys(groups).sort().reverse();
-  tl.innerHTML = dates.map(d => {
+  tl.innerHTML = Object.keys(groups).sort().reverse().map(d => {
     const items = groups[d];
-    const iso = items[0].date;
     return `
       <div class="timeline-day">
-        <div class="timeline-date">${fmtDateLong(iso)}</div>
-        <div class="timeline-date-jp">${fmtDateJp(iso)} 　${items.length}件の出会い</div>
+        <div class="timeline-date">${fmtDateLong(items[0].date)}</div>
+        <div class="timeline-date-jp">${fmtDateJp(items[0].date)} 　${items.length}件の出会い</div>
         <div class="timeline-items">
           ${items.map(e => `
             <div class="timeline-item" data-id="${e.id}">
-              <img src="${e.image}" alt="${e.name}" loading="lazy">
+              <img src="${escapeHtml(e.image)}" alt="${escapeHtml(e.name)}" loading="lazy">
               <div class="timeline-item-name">${escapeHtml(e.name)}</div>
             </div>
           `).join('')}
         </div>
-      </div>
-    `;
+      </div>`;
   }).join('');
-  tl.querySelectorAll('.timeline-item').forEach(c => {
-    c.addEventListener('click', () => showDetail(c.dataset.id));
-  });
+  tl.querySelectorAll('.timeline-item').forEach(c => c.addEventListener('click', () => showDetail(c.dataset.id)));
 }
 
 function renderMap() {
@@ -1241,30 +1269,23 @@ function renderMap() {
   mapMarkers = [];
 
   const withCoords = entries.filter(e => e.coords);
-  if (withCoords.length === 0) {
-    setTimeout(() => mapInstance.invalidateSize(), 100);
-    return;
-  }
+  if (withCoords.length === 0) { setTimeout(() => mapInstance.invalidateSize(), 100); return; }
 
   const bounds = [];
   withCoords.forEach(e => {
     const icon = L.divIcon({
       className: 'custom-pin',
       html: `<div style="background:#4a5d3a;color:#f5efe4;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #f5efe4;box-shadow:0 2px 6px rgba(0,0,0,0.3);font-size:14px;">❀</div>`,
-      iconSize: [30, 30],
-      iconAnchor: [15, 15]
+      iconSize: [30, 30], iconAnchor: [15, 15]
     });
     const m = L.marker([e.coords.lat, e.coords.lng], { icon }).addTo(mapInstance);
     m.bindPopup(`
       <div class="map-popup">
-        <img src="${e.image}" alt="">
+        <img src="${escapeHtml(e.image)}" alt="">
         <div class="map-popup-name">${escapeHtml(e.name)}</div>
         <div class="map-popup-date">${fmtDate(e.date)}</div>
-      </div>
-    `);
-    m.on('click', () => {
-      setTimeout(() => showDetail(e.id), 300);
-    });
+      </div>`);
+    m.on('click', () => setTimeout(() => showDetail(e.id), 300));
     mapMarkers.push(m);
     bounds.push([e.coords.lat, e.coords.lng]);
   });
@@ -1302,9 +1323,7 @@ document.getElementById('detail-close').addEventListener('click', () => {
   document.getElementById('detail-modal').classList.remove('show');
 });
 document.getElementById('detail-modal').addEventListener('click', (e) => {
-  if (e.target.id === 'detail-modal') {
-    document.getElementById('detail-modal').classList.remove('show');
-  }
+  if (e.target.id === 'detail-modal') document.getElementById('detail-modal').classList.remove('show');
 });
 
 document.getElementById('detail-edit').addEventListener('click', () => {
@@ -1323,98 +1342,38 @@ document.getElementById('detail-edit').addEventListener('click', () => {
   document.getElementById('upload-modal').classList.add('show');
 });
 
-document.getElementById('detail-delete').addEventListener('click', () => {
+document.getElementById('detail-delete').addEventListener('click', async () => {
   if (!currentEntry) return;
   if (!confirm('この記録を削除しますか？')) return;
-  entries = entries.filter(e => e.id !== currentEntry.id);
-  saveEntries();
-  document.getElementById('detail-modal').classList.remove('show');
-  renderAll();
-});
-
-function escapeHtml(s) {
-  if (!s) return '';
-  return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
-}
-
-// ============ Settings ============
-function openSettings() {
-  document.getElementById('api-key-input').value = settings.apiKey || '';
-  document.getElementById('auto-identify').checked = settings.autoIdentify;
-  document.getElementById('upload-modal').classList.remove('show');
-  document.getElementById('settings-modal').classList.add('show');
-}
-
-document.getElementById('settings-btn').addEventListener('click', openSettings);
-document.getElementById('api-notice-btn').addEventListener('click', openSettings);
-
-document.getElementById('settings-cancel').addEventListener('click', () => {
-  document.getElementById('settings-modal').classList.remove('show');
-});
-
-document.getElementById('settings-save').addEventListener('click', () => {
-  settings.apiKey = document.getElementById('api-key-input').value.trim();
-  settings.autoIdentify = document.getElementById('auto-identify').checked;
-  saveSettings();
-  document.getElementById('settings-modal').classList.remove('show');
-  updateApiNotice();
-});
-
-function updateApiNotice() {
-  const notice = document.getElementById('api-notice');
-  if (settings.apiKey) {
-    notice.classList.remove('show');
-  } else {
-    notice.classList.add('show');
+  const btn = document.getElementById('detail-delete');
+  btn.disabled = true;
+  try {
+    await deleteFirestoreEntry(currentEntry.id);
+    entries = entries.filter(e => e.id !== currentEntry.id);
+    document.getElementById('detail-modal').classList.remove('show');
+    renderAll();
+  } catch (e) {
+    alert('削除に失敗しました: ' + e.message);
+    btn.disabled = false;
   }
-}
+});
 
-// ============ Export / Import ============
+// ============ Export ============
 document.getElementById('export-btn').addEventListener('click', () => {
-  const data = JSON.stringify(entries, null, 2);
+  const data = JSON.stringify(entries.map(e => ({
+    id: e.id, date: e.date, name: e.name,
+    scientificName: e.scientificName, category: e.category,
+    description: e.description, location: e.location,
+    coords: e.coords
+  })), null, 2);
   const blob = new Blob([data], { type: 'application/json' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  const date = new Date().toISOString().slice(0, 10);
   a.href = url;
-  a.download = `walk-diary-${date}.json`;
+  a.download = `walk-diary-${new Date().toISOString().slice(0,10)}.json`;
   a.click();
   URL.revokeObjectURL(url);
 });
-
-document.getElementById('import-btn').addEventListener('click', () => {
-  document.getElementById('import-input').click();
-});
-
-document.getElementById('import-input').addEventListener('change', (e) => {
-  const file = e.target.files[0];
-  if (!file) return;
-  const reader = new FileReader();
-  reader.onload = (ev) => {
-    try {
-      const imported = JSON.parse(ev.target.result);
-      if (!Array.isArray(imported)) throw new Error('Invalid format');
-      if (!confirm(`${imported.length}件の記録をインポートします。既存の記録に追加されます。続けますか？`)) return;
-      const existingIds = new Set(entries.map(x => x.id));
-      const newOnes = imported.filter(x => x.id && !existingIds.has(x.id));
-      entries = [...newOnes, ...entries];
-      entries.sort((a, b) => new Date(b.date) - new Date(a.date));
-      saveEntries();
-      renderAll();
-      alert(`${newOnes.length}件をインポートしました`);
-    } catch (err) {
-      alert('インポートに失敗しました。ファイル形式を確認してください。');
-    }
-  };
-  reader.readAsText(file);
-  e.target.value = '';
-});
-
-// ============ Init ============
-loadEntries();
-loadSettings();
-updateApiNotice();
-renderAll();
 </script>
 </body>
 </html>
