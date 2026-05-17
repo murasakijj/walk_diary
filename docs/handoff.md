@@ -181,20 +181,20 @@ service firebase.storage {
 
 ## 実装プラン
 
-### フェーズ1（現在）：認証＋クラウド保存
+### フェーズ1（✅ 完了 2026-05-17）：認証＋クラウド保存
 
-- [ ] Firebaseプロジェクト作成（ユーザーが手動実施）
-- [ ] Authentication有効化（Google + メール/パスワード）
-- [ ] Firestore有効化
-- [ ] Storage有効化
-- [ ] Webアプリ登録 → `firebaseConfig` 取得・共有
-- [ ] Firebase SDK組み込み（CDN経由）
-- [ ] ログイン画面の追加
-- [ ] 写真アップロード処理をFirebase Storageに切り替え
-- [ ] 記録の保存/読み込みをFirestoreに切り替え
-- [ ] 既存localStorageデータのFirestore移行機能
-- [ ] セキュリティルール設定（Firestore + Storage）
-- [ ] GitHub Pushして動作確認
+- [x] Firebaseプロジェクト作成
+- [x] Authentication有効化（Google + メール/パスワード）
+- [x] Firestore有効化
+- [x] Storage不使用に変更（写真はbase64でFirestoreに直接保存、800px/75%品質）
+- [x] Webアプリ登録 → `firebaseConfig` 取得
+- [x] Firebase SDK 10.14.1（modular CDN）組み込み
+- [x] ログイン画面の追加（ボタニカルデザイン統一）
+- [x] 記録の保存/読み込みをFirestoreに切り替え
+- [x] 既存localStorageデータのFirestore移行機能
+- [x] セキュリティルール設定（Firestore + Auth承認済みドメイン）
+- [x] ログインを特定メールアドレスのみに制限（個人利用）
+- [x] GitHub Pushして動作確認・移行成功
 
 ### フェーズ2（後で）：共有機能
 
