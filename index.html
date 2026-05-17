@@ -377,6 +377,134 @@
   /* ===== Settings Btn ===== */
   .settings-btn { position: absolute; top: 24px; right: 16px; background: transparent; border: 1px solid var(--paper-shadow); width: 32px; height: 32px; border-radius: 50%; cursor: pointer; color: var(--moss); font-size: 14px; display: flex; align-items: center; justify-content: center; }
 
+  /* ===== Share Mode ===== */
+  body.share-mode .bottom-bar { display: none !important; }
+  body.share-mode .settings-btn { display: none !important; }
+  body.share-mode .user-badge-wrap { display: none !important; }
+  body.share-mode #detail-edit { display: none !important; }
+  body.share-mode #detail-delete { display: none !important; }
+  body.share-mode .tab[data-view="map"] { display: inline-block; }
+
+  .share-banner {
+    text-align: center;
+    padding: 14px 20px 10px;
+    border-bottom: 1px dashed var(--paper-shadow);
+    margin-bottom: 4px;
+  }
+  .share-banner-owner {
+    font-family: 'Klee One', cursive;
+    font-size: 13px;
+    color: var(--moss);
+    letter-spacing: 0.1em;
+  }
+  .share-banner-count {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--moss-light);
+    margin-top: 2px;
+    letter-spacing: 0.15em;
+  }
+  .share-footer {
+    text-align: center;
+    padding: 32px 20px calc(32px + env(safe-area-inset-bottom));
+    border-top: 1px dashed var(--paper-shadow);
+    margin-top: 24px;
+    font-family: 'Klee One', cursive;
+    font-size: 13px;
+    color: var(--moss-light);
+    line-height: 1.8;
+  }
+  .share-footer a {
+    display: inline-block;
+    margin-top: 10px;
+    padding: 10px 24px;
+    background: var(--moss);
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    border-radius: 2px;
+  }
+
+  /* ===== Share Error Screen ===== */
+  .share-error-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 16px;
+    padding: 40px 24px;
+    text-align: center;
+  }
+  .share-error-icon { font-size: 40px; opacity: 0.3; }
+  .share-error-title { font-size: 16px; font-weight: 600; color: var(--ink); letter-spacing: 0.1em; }
+  .share-error-msg { font-family: 'Klee One', cursive; font-size: 13px; color: var(--moss-light); line-height: 1.8; }
+  .share-error-screen a {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 10px 24px;
+    background: var(--moss);
+    color: var(--paper);
+    text-decoration: none;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    border-radius: 2px;
+  }
+
+  /* ===== Share Settings & URL Modal ===== */
+  .share-expiry-group { display: flex; flex-direction: column; gap: 8px; }
+  .share-expiry-option {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 12px;
+    border: 1px solid var(--paper-shadow);
+    border-radius: 2px;
+    cursor: pointer;
+    font-family: 'Klee One', cursive;
+    font-size: 13px;
+    color: var(--ink);
+    background: #fefcf6;
+    transition: border-color 0.2s;
+  }
+  .share-expiry-option.selected {
+    border-color: var(--moss);
+    background: rgba(74,93,58,0.05);
+    color: var(--moss);
+  }
+  .share-expiry-option input[type="radio"] { accent-color: var(--moss); }
+  .share-url-field {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--paper-shadow);
+    background: var(--paper-deep);
+    font-family: monospace;
+    font-size: 12px;
+    color: var(--ink);
+    border-radius: 2px;
+    word-break: break-all;
+  }
+  .share-url-actions { display: flex; gap: 8px; margin-top: 8px; }
+
+  /* ===== Share List in Settings ===== */
+  .share-list-item {
+    padding: 10px 12px;
+    border: 1px solid var(--paper-shadow);
+    margin-bottom: 8px;
+    background: #fefcf6;
+    font-family: 'Klee One', cursive;
+    font-size: 11px;
+    color: var(--moss-light);
+    line-height: 1.8;
+  }
+  .share-list-item-name { font-size: 13px; color: var(--ink); font-weight: 600; margin-bottom: 2px; }
+  .share-list-item-actions { display: flex; gap: 6px; margin-top: 8px; }
+  .share-list-item-actions button { flex: 1; padding: 6px 8px; font-size: 11px; }
+  .tag-expired { color: var(--berry); }
+  .tag-active { color: var(--moss); }
+
   /* ===== API Notice ===== */
   .api-notice { background: rgba(184,148,86,0.15); border: 1px solid var(--gold); padding: 14px 16px; margin: 12px 16px; border-radius: 2px; font-family: 'Klee One', cursive; font-size: 12px; color: var(--bark); line-height: 1.7; display: none; }
   .api-notice.show { display: block; }
@@ -386,6 +514,16 @@
 </style>
 </head>
 <body>
+
+<!-- Share Error Screen -->
+<div id="share-error-screen" class="share-error-screen" style="display:none;">
+  <div class="share-error-icon">❀</div>
+  <div class="title" style="font-size:14px;margin-bottom:4px;">Botanical Walk Diary</div>
+  <div class="title-jp" style="font-size:22px;">散 歩 図 鑑</div>
+  <div style="margin:16px 0 4px;"><div class="share-error-title" id="share-error-title">このリンクは無効です</div></div>
+  <div class="share-error-msg" id="share-error-msg">期限切れか、無効化されたリンクです。</div>
+  <a href="/">ログインして始める →</a>
+</div>
 
 <!-- Loading Screen -->
 <div id="loading-screen" class="loading-screen">
@@ -440,6 +578,12 @@
   <div class="subtitle">〜 日々の小さな出会いを綴る 〜</div>
   <button class="settings-btn" id="settings-btn" title="設定">⚙</button>
 </header>
+
+<!-- Share Banner (share mode only) -->
+<div id="share-banner" class="share-banner" style="display:none;">
+  <div class="share-banner-owner" id="share-banner-owner"></div>
+  <div class="share-banner-count" id="share-banner-count"></div>
+</div>
 
 <!-- Migration Notice -->
 <div id="migration-notice" class="migration-notice" style="display:none;">
@@ -496,6 +640,13 @@
   </button>
 </div>
 <input type="file" id="file-input" accept="image/*" capture="environment" style="display:none;">
+
+<!-- Share Footer CTA (share mode only) -->
+<div id="share-footer" class="share-footer" style="display:none;">
+  あなたも散歩図鑑を始めてみませんか？<br>
+  <small style="font-size:11px;">出会った花・植物・犬などをAIで識別して記録するアプリです</small><br>
+  <a href="/">ログインして始める →</a>
+</div>
 
 </div><!-- /#app-screen -->
 
@@ -557,6 +708,7 @@
       <div class="modal-meta" id="detail-meta"></div>
       <div class="modal-actions">
         <button class="btn-secondary" id="detail-edit">編集する</button>
+        <button class="btn-secondary" id="detail-share" style="border-color:var(--sky);color:var(--sky);">共有する</button>
         <button class="btn-danger" id="detail-delete">削除する</button>
       </div>
     </div>
@@ -587,6 +739,12 @@
       <button class="btn-icon" id="export-btn" style="width:100%;">記録をエクスポート（JSON）</button>
     </div>
     <div style="border-top:1px dashed var(--paper-shadow);margin:16px 0;padding-top:16px;">
+      <div class="form-label">共有リンク管理</div>
+      <div id="share-list" style="margin-top:8px;">
+        <div style="font-family:'Klee One',cursive;font-size:12px;color:var(--moss-light);">読み込み中...</div>
+      </div>
+    </div>
+    <div style="border-top:1px dashed var(--paper-shadow);margin:16px 0;padding-top:16px;">
       <div class="form-label">アカウント</div>
       <div id="settings-user-info" style="font-family:'Klee One',cursive;font-size:12px;color:var(--moss-light);margin-bottom:10px;"></div>
       <button class="btn-icon" id="btn-signout" style="width:100%;color:var(--berry);border-color:var(--berry);">サインアウト</button>
@@ -598,10 +756,55 @@
   </div>
 </div>
 
+<!-- Share Settings Modal -->
+<div class="upload-modal" id="share-settings-modal">
+  <div class="upload-content">
+    <div class="upload-title">共 有 リ ン ク 作 成</div>
+    <div class="upload-subtitle">Share Link Creation</div>
+    <div class="form-group">
+      <label class="form-label">共有内容</label>
+      <div id="share-target-info" style="font-family:'Klee One',cursive;font-size:13px;color:var(--ink);padding:10px 12px;background:var(--paper-deep);border-radius:2px;line-height:1.6;"></div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">有 効 期 限</label>
+      <div class="share-expiry-group" id="share-expiry-group">
+        <label class="share-expiry-option"><input type="radio" name="expiry" value="1"> 1日</label>
+        <label class="share-expiry-option selected"><input type="radio" name="expiry" value="7" checked> 1週間（おすすめ）</label>
+        <label class="share-expiry-option"><input type="radio" name="expiry" value="30"> 1ヶ月</label>
+        <label class="share-expiry-option"><input type="radio" name="expiry" value="0"> 無期限</label>
+      </div>
+    </div>
+    <div class="upload-actions">
+      <button class="btn-cancel" id="share-settings-cancel">取消</button>
+      <button class="btn-primary" id="share-settings-create">共有リンクを作成</button>
+    </div>
+  </div>
+</div>
+
+<!-- Share URL Modal -->
+<div class="upload-modal" id="share-url-modal">
+  <div class="upload-content">
+    <div class="upload-title">✓ リンクができました</div>
+    <div class="upload-subtitle">Share Link Ready</div>
+    <div class="form-group">
+      <label class="form-label">共有URL</label>
+      <div class="share-url-field" id="share-url-display"></div>
+      <div class="share-url-actions">
+        <button class="btn-icon" id="share-url-copy" style="flex:1;">📋 コピー</button>
+        <button class="btn-icon" id="share-url-native" style="flex:1;">📤 共有する</button>
+      </div>
+    </div>
+    <div style="font-family:'Klee One',cursive;font-size:12px;color:var(--moss-light);padding:8px 0;" id="share-url-expiry"></div>
+    <div class="upload-actions" style="margin-top:4px;">
+      <button class="btn-primary" id="share-url-close">閉じる</button>
+    </div>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js';
 import { getAuth, GoogleAuthProvider, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js';
-import { getFirestore, collection, doc, getDocs, setDoc, updateDoc, deleteDoc, query, where, serverTimestamp, Timestamp } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
+import { getFirestore, collection, doc, getDocs, getDoc, setDoc, updateDoc, deleteDoc, query, where, serverTimestamp, Timestamp, arrayUnion, arrayRemove } from 'https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js';
 
 // ============ Firebase Init ============
 const firebaseConfig = {
@@ -615,6 +818,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
+
+// ============ 共有モード検出 ============
+const shareToken = new URLSearchParams(window.location.search).get('share');
 
 // ============ アクセス制限 ============
 const ALLOWED_EMAIL = 'u9c3300232346g@gmail.com';
@@ -651,6 +857,7 @@ function showApp() {
 
 // ============ Auth State ============
 onAuthStateChanged(auth, async (user) => {
+  if (shareToken) return; // share mode handles its own init
   if (user) {
     if (user.email !== ALLOWED_EMAIL) {
       await signOut(auth);
@@ -666,6 +873,7 @@ onAuthStateChanged(auth, async (user) => {
     renderAll();
     updateApiNotice();
     checkMigrationNeeded();
+    loadMyShares();
   } else {
     currentUser = null;
     entries = [];
@@ -1383,6 +1591,216 @@ document.getElementById('export-btn').addEventListener('click', () => {
   a.click();
   URL.revokeObjectURL(url);
 });
+
+// ============ Share View (read-only, no login) ============
+async function initShareView(token) {
+  document.getElementById('loading-screen').style.display = 'flex';
+  try {
+    const shareSnap = await getDoc(doc(db, 'shares', token));
+    if (!shareSnap.exists()) { showShareError('このリンクは存在しません', '共有リンクが見つかりませんでした。'); return; }
+    const share = shareSnap.data();
+    if (share.revoked) { showShareError('このリンクは無効化されました', '共有者がリンクを無効にしました。'); return; }
+    if (share.expiresAt && share.expiresAt.toDate() < new Date()) { showShareError('このリンクは期限切れです', '有効期限が過ぎています。'); return; }
+
+    // Fetch entries
+    let shareEntries = [];
+    if (share.shareType === 'all') {
+      const q = query(collection(db, 'entries'), where('ownerId', '==', share.ownerId));
+      const snap = await getDocs(q);
+      snap.forEach(d => shareEntries.push({ id: d.id, ...d.data() }));
+    } else {
+      const ids = share.entryIds || [];
+      const fetches = ids.map(id => getDoc(doc(db, 'entries', id)));
+      const snaps = await Promise.all(fetches);
+      snaps.forEach(s => { if (s.exists()) shareEntries.push({ id: s.id, ...s.data() }); });
+    }
+    shareEntries = shareEntries.map(e => ({
+      ...e,
+      image: e.photoData || '',
+      date: e.date?.toDate ? e.date.toDate().toISOString() : new Date().toISOString(),
+    })).sort((a, b) => new Date(b.date) - new Date(a.date));
+
+    entries = shareEntries;
+    document.body.classList.add('share-mode');
+    document.getElementById('share-banner').style.display = 'block';
+    document.getElementById('share-banner-owner').textContent = `${share.ownerName || ''}さんが見つけたもの`;
+    document.getElementById('share-banner-count').textContent = `全 ${shareEntries.length} 件の出会い`;
+    document.getElementById('share-footer').style.display = 'block';
+    document.getElementById('loading-screen').style.display = 'none';
+    document.getElementById('app-screen').style.display = 'block';
+    renderAll();
+  } catch (e) {
+    showShareError('エラーが発生しました', e.message);
+  }
+}
+
+function showShareError(title, msg) {
+  document.getElementById('loading-screen').style.display = 'none';
+  document.getElementById('share-error-screen').style.display = 'flex';
+  document.getElementById('share-error-title').textContent = title;
+  document.getElementById('share-error-msg').textContent = msg;
+}
+
+// Start share view if token present
+if (shareToken) initShareView(shareToken);
+
+// ============ Share Creation ============
+let sharingEntryId = null;
+
+document.getElementById('detail-share').addEventListener('click', () => {
+  if (!currentEntry) return;
+  sharingEntryId = currentEntry.id;
+  document.getElementById('detail-modal').classList.remove('show');
+  document.getElementById('share-target-info').textContent = `「${currentEntry.name}」1件の記録`;
+  document.querySelector('#share-settings-modal input[name="expiry"][value="7"]').checked = true;
+  document.getElementById('share-settings-modal').classList.add('show');
+});
+
+document.getElementById('share-settings-cancel').addEventListener('click', () => {
+  document.getElementById('share-settings-modal').classList.remove('show');
+});
+
+document.getElementById('share-settings-create').addEventListener('click', async () => {
+  if (!sharingEntryId) return;
+  const btn = document.getElementById('share-settings-create');
+  btn.disabled = true;
+  btn.textContent = '作成中...';
+  try {
+    const expiryVal = document.querySelector('#share-settings-modal input[name="expiry"]:checked')?.value;
+    const expiryDays = (!expiryVal || expiryVal === '0') ? null : parseInt(expiryVal, 10);
+    const url = await createShare(sharingEntryId, expiryDays);
+    document.getElementById('share-settings-modal').classList.remove('show');
+    document.getElementById('share-url-display').textContent = url;
+    if (expiryDays) {
+      const exp = new Date(); exp.setDate(exp.getDate() + expiryDays);
+      document.getElementById('share-url-expiry').textContent =
+        `有効期限：${exp.getFullYear()}.${String(exp.getMonth()+1).padStart(2,'0')}.${String(exp.getDate()).padStart(2,'0')}`;
+    } else {
+      document.getElementById('share-url-expiry').textContent = '有効期限：無期限';
+    }
+    document.getElementById('share-url-modal').classList.add('show');
+    loadMyShares();
+  } catch (e) {
+    alert('共有リンクの作成に失敗しました: ' + e.message);
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '共有リンクを作成';
+  }
+});
+
+async function createShare(entryId, expiryDays) {
+  const token = crypto.randomUUID().replace(/-/g, '');
+  const expiresAt = expiryDays ? Timestamp.fromDate(new Date(Date.now() + expiryDays * 86400000)) : null;
+  await setDoc(doc(db, 'shares', token), {
+    ownerId: currentUser.uid,
+    ownerName: currentUser.displayName || currentUser.email?.split('@')[0] || '名無し',
+    shareType: 'single',
+    entryIds: [entryId],
+    createdAt: serverTimestamp(),
+    expiresAt,
+    revoked: false,
+  });
+  await updateDoc(doc(db, 'entries', entryId), {
+    visibility: 'shared',
+    sharedIn: arrayUnion(token),
+  });
+  return `${location.origin}${location.pathname}?share=${token}`;
+}
+
+document.getElementById('share-url-copy').addEventListener('click', async () => {
+  const url = document.getElementById('share-url-display').textContent;
+  try {
+    await navigator.clipboard.writeText(url);
+    const btn = document.getElementById('share-url-copy');
+    const orig = btn.textContent;
+    btn.textContent = '✓ コピーしました';
+    setTimeout(() => { btn.textContent = orig; }, 2000);
+  } catch { alert('コピーできませんでした。手動でコピーしてください。'); }
+});
+
+document.getElementById('share-url-native').addEventListener('click', () => {
+  const url = document.getElementById('share-url-display').textContent;
+  if (navigator.share) {
+    navigator.share({ title: '散歩図鑑の記録', text: '見つけたものをシェアします', url });
+  } else {
+    alert('この端末では共有機能が使えません。URLをコピーしてください。');
+  }
+});
+
+document.getElementById('share-url-close').addEventListener('click', () => {
+  document.getElementById('share-url-modal').classList.remove('show');
+});
+
+// ============ Share Management ============
+async function loadMyShares() {
+  if (!currentUser) return;
+  try {
+    const q = query(collection(db, 'shares'), where('ownerId', '==', currentUser.uid));
+    const snap = await getDocs(q);
+    const shares = [];
+    snap.forEach(d => shares.push({ id: d.id, ...d.data() }));
+    shares.sort((a, b) => (b.createdAt?.seconds || 0) - (a.createdAt?.seconds || 0));
+    renderShareList(shares);
+  } catch (e) {
+    console.warn('share list load failed:', e);
+  }
+}
+
+function renderShareList(shares) {
+  const el = document.getElementById('share-list');
+  if (shares.length === 0) {
+    el.innerHTML = '<div style="font-family:\'Klee One\',cursive;font-size:12px;color:var(--moss-light);">共有中のリンクはありません</div>';
+    return;
+  }
+  const now = new Date();
+  el.innerHTML = shares.map(s => {
+    const expired = s.expiresAt && s.expiresAt.toDate() < now;
+    const revoked = s.revoked;
+    const status = revoked ? '<span class="tag-expired">無効</span>' : expired ? '<span class="tag-expired">期限切れ</span>' : '<span class="tag-active">有効</span>';
+    const expText = s.expiresAt
+      ? (() => { const d = s.expiresAt.toDate(); return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}まで`; })()
+      : '無期限';
+    const entryLabel = s.shareType === 'all' ? '全件' : `${(s.entryIds||[]).length}件`;
+    const url = `${location.origin}${location.pathname}?share=${s.id}`;
+    return `
+      <div class="share-list-item">
+        <div class="share-list-item-name">${entryLabel} の共有 — ${status}</div>
+        <div style="font-size:11px;">${expText}</div>
+        <div class="share-list-item-actions">
+          <button class="btn-secondary" onclick="navigator.clipboard.writeText('${escapeHtml(url)}').then(()=>alert('コピーしました'))">URLコピー</button>
+          ${!revoked && !expired ? `<button class="btn-danger" style="font-size:11px;" data-revoke="${s.id}">無効化</button>` : ''}
+        </div>
+      </div>`;
+  }).join('');
+  el.querySelectorAll('[data-revoke]').forEach(btn => {
+    btn.addEventListener('click', async () => {
+      if (!confirm('このリンクを無効化しますか？')) return;
+      btn.disabled = true;
+      try {
+        await revokeShare(btn.dataset.revoke);
+        await loadMyShares();
+      } catch (e) {
+        alert('無効化に失敗しました: ' + e.message);
+        btn.disabled = false;
+      }
+    });
+  });
+}
+
+async function revokeShare(token) {
+  const shareSnap = await getDoc(doc(db, 'shares', token));
+  if (!shareSnap.exists()) return;
+  const share = shareSnap.data();
+  await updateDoc(doc(db, 'shares', token), { revoked: true });
+  // Clean up entries if all shares for an entry are now revoked/expired
+  if (share.entryIds) {
+    for (const entryId of share.entryIds) {
+      await updateDoc(doc(db, 'entries', entryId), {
+        sharedIn: arrayRemove(token),
+      });
+    }
+  }
+}
 </script>
 </body>
 </html>

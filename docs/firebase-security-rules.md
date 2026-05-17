@@ -22,6 +22,8 @@
 
 4. **下記のルールを丸ごとコピーして貼り付ける**（既存の内容は全部消してOK）
 
+> ⚠️ フェーズ2の共有機能を実装したため、ルールを更新しています。必ず新しいルールに差し替えてください。
+
 ```
 rules_version = '2';
 service cloud.firestore {
@@ -33,11 +35,19 @@ service cloud.firestore {
       allow write: if request.auth.uid == userId;
     }
 
-    // 記録エントリ：自分のものだけ読み書き・削除できる
+    // 記録エントリ：自分のもの or 共有済みなら読める
     match /entries/{entryId} {
-      allow read:   if request.auth.uid == resource.data.ownerId;
-      allow create: if request.auth.uid == request.resource.data.ownerId;
-      allow update, delete: if request.auth.uid == resource.data.ownerId;
+      allow read:   if (request.auth != null && request.auth.uid == resource.data.ownerId)
+                     || resource.data.visibility == 'shared';
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.ownerId;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.ownerId;
+    }
+
+    // 共有トークン：誰でも読める（URLを知っている人のみ）、自分だけ作成・削除
+    match /shares/{shareToken} {
+      allow read: if true;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.ownerId;
+      allow update, delete: if request.auth != null && request.auth.uid == resource.data.ownerId;
     }
 
   }
